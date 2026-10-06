@@ -74,17 +74,26 @@ export async function POST(req: Request) {
     },
   };
 
-  const res = await fetch(`${url}/rest/v1/payment_events`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      apikey: key,
-      ...(key.startsWith("eyJ") ? { Authorization: `Bearer ${key}` } : {}),
-      Prefer: "return=minimal",
-    },
-    body: JSON.stringify(row),
-  });
-
-  if (!res.ok) return Response.json({ ok: false }, { status: 500 });
+  try {
+    const res = await fetch(`${url.replace(/\/+$/, "")}/rest/v1/payment_events`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        apikey: key,
+        ...(key.startsWith("eyJ") ? { Authorization: `Bearer ${key}` } : {}),
+        Prefer: "return=minimal",
+      },
+      body: JSON.stringify(row),
+      signal: AbortSignal.timeout(5000), // nunca deixa a Okanda à espera
+    });
+    if (!res.ok) {
+      console.error("okanda-webhook: falha ao guardar", res.status, (await res.text()).slice(0, 300));
+      return Response.json({ ok: false, stage: "db" }, { status: 500 });
+    }
+  } catch (err) {
+    console.error("okanda-webhook: erro ao guardar", err instanceof Error ? err.message : err);
+    return Response.json({ ok: false, stage: "db_timeout_or_network" }, { status: 500 });
+  }
+  console.log("okanda-webhook: guardado", row.event_id, "cabeçalhos:", Object.keys(headers).filter((k) => k.startsWith("x-okanda-")).join(","));
   return Response.json({ ok: true });
 }
