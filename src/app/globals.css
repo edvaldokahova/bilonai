@@ -1,0 +1,115 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ---------------------------------------------------------------
+   TOKENS — formato "R G B" para suportar opacidade no Tailwind.
+   Escuro é o padrão (classe "dark" no <html>); claro é opcional.
+   --------------------------------------------------------------- */
+:root {
+  color-scheme: light;
+  --bg: 247 244 238;
+  --fg: 20 19 15;
+  --muted: 107 102 90;
+  --line: 20 19 15;
+  --surface: 255 255 255;
+  --glass-a: 0.7;
+  --gold: 166 124 26;
+  --gold-light: 212 169 54;
+  --gold-deep: 140 106 18;
+  --ok: 21 128 61;
+  --warn: 180 83 9;
+  --danger: 185 28 28;
+}
+
+.dark {
+  color-scheme: dark;
+  --bg: 10 11 13;
+  --fg: 244 239 230;
+  --muted: 169 163 150;
+  --line: 244 239 230;
+  --surface: 255 255 255;
+  --glass-a: 0.045;
+  --gold: 212 169 54;
+  --gold-light: 243 215 122;
+  --gold-deep: 166 124 26;
+  --ok: 74 222 128;
+  --warn: 251 191 36;
+  --danger: 248 113 113;
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    @apply bg-bg font-sans text-fg antialiased;
+    min-height: 100dvh;
+  }
+  /* brilho dourado discreto no topo, fixo atrás do conteúdo */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background: radial-gradient(60rem 28rem at 50% -8%, rgb(var(--gold-light) / 0.1), transparent 65%);
+  }
+  ::selection {
+    background: rgb(var(--gold-light) / 0.3);
+  }
+  :focus-visible {
+    outline: 2px solid rgb(var(--gold-light) / 0.7);
+    outline-offset: 2px;
+  }
+}
+
+@layer components {
+  /* Vidro: superfície translúcida com borda fina */
+  .glass {
+    background: rgb(var(--surface) / var(--glass-a));
+    border: 1px solid rgb(var(--line) / 0.1);
+    -webkit-backdrop-filter: blur(18px) saturate(140%);
+    backdrop-filter: blur(18px) saturate(140%);
+    box-shadow: 0 1px 0 0 rgb(255 255 255 / 0.04) inset, 0 24px 60px -34px rgb(0 0 0 / 0.55);
+  }
+
+  .gold-text {
+    background-image: linear-gradient(135deg, #f3d77a, #d4a936 50%, #a67c1a);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .btn {
+    @apply inline-flex h-11 items-center justify-center gap-2 rounded-xl px-5 text-sm font-medium transition duration-200;
+  }
+  .btn-gold {
+    color: #1a1405;
+    background-image: linear-gradient(135deg, #f3d77a, #d4a936 55%, #a67c1a);
+    box-shadow: 0 10px 30px -14px rgb(212 169 54 / 0.55);
+  }
+  .btn-gold:hover {
+    filter: brightness(1.06);
+  }
+  .btn-ghost {
+    border: 1px solid rgb(var(--line) / 0.16);
+    background: rgb(var(--surface) / var(--glass-a));
+  }
+  .btn-ghost:hover {
+    border-color: rgb(var(--gold-light) / 0.5);
+  }
+
+  .chip {
+    @apply inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-medium text-muted;
+    border: 1px solid rgb(var(--line) / 0.12);
+    background: rgb(var(--surface) / var(--glass-a));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
