@@ -44,10 +44,9 @@ export async function POST(req: Request) {
     if (k !== "authorization" && k !== "cookie") headers[k] = value;
   });
 
-  // Barreira simples contra lixo: a Okanda envia sempre cabeçalhos X-Okanda-*
-  if (!Object.keys(headers).some((k) => k.startsWith("x-okanda-"))) {
-    return Response.json({ ok: false }, { status: 400 });
-  }
+  // Nesta fase de captura aceitamos também pedidos sem X-Okanda-* (ex.: o "ping" do botão Conectar),
+  // mas ficam marcados para os distinguir. O handler definitivo recusa tudo o que não vier assinado.
+  const hasOkandaHeaders = Object.keys(headers).some((k) => k.startsWith("x-okanda-"));
 
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
@@ -64,7 +63,7 @@ export async function POST(req: Request) {
   const row = {
     provider: "okanda",
     event_id: `capture-${randomUUID()}`,
-    event_type: "capture",
+    event_type: hasOkandaHeaders ? "capture" : "capture_unsigned",
     processed_at: new Date().toISOString(), // para a limpeza automática apagar em 30 dias
     payload: {
       headers,
