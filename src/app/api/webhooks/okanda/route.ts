@@ -96,3 +96,12 @@ export async function POST(req: Request) {
   console.log("okanda-webhook: guardado", row.event_id, "cabeçalhos:", Object.keys(headers).filter((k) => k.startsWith("x-okanda-")).join(","));
   return Response.json({ ok: true });
 }
+
+// Verificações de ligação (GET/HEAD) respondem 200 sem guardar nada.
+export async function GET() {
+  return Response.json({ ok: true, service: "bilonai-webhook" });
+}
+
+export async function HEAD() {
+  return new Response(null, { status: 200 });
+}
