@@ -36,12 +36,22 @@ function signatureChecks(secret: string, body: string, headers: Record<string, s
 }
 
 export async function POST(req: Request) {
-  const body = (await req.text()).slice(0, MAX_BODY);
+  // Primeira linha: prova que o pedido chegou ao nosso código (mesmo que depois algo falhe).
+  console.log("okanda-webhook: recebido", req.method, req.headers.get("content-type"), req.headers.get("content-length"));
 
+  let body = "";
+  try {
+    body = (await req.text()).slice(0, MAX_BODY);
+  } catch (err) {
+    console.error("okanda-webhook: erro a ler o corpo", err instanceof Error ? err.message : err);
+  }
+
+  // Não guardamos cabeçalhos internos da Vercel (contêm tokens) nem credenciais.
   const headers: Record<string, string> = {};
   req.headers.forEach((value, key) => {
     const k = key.toLowerCase();
-    if (k !== "authorization" && k !== "cookie") headers[k] = value;
+    if (k === "authorization" || k === "cookie" || k === "forwarded" || k.startsWith("x-vercel-")) return;
+    headers[k] = value;
   });
 
   // Nesta fase de captura aceitamos também pedidos sem X-Okanda-* (ex.: o "ping" do botão Conectar),
