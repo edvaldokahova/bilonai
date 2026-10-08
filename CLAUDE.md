@@ -31,7 +31,8 @@
 
 ## 3. Os agentes (nomes internos → função)
 - `spy` — **Espião**: varre a Meta Ad Library via **Apify** (nicho + país), encontra ofertas escaladas,
-  analisa anúncios e funil, relatório a cada 2 dias (painel + e-mail + Google Drive do cliente).
+  analisa anúncios e funil, relatório a cada **3 dias no Alpha Node** e a cada **2 dias no Apex Trader e Syndicate**
+  (painel + e-mail + Google Drive do cliente).
 - `offers` — **Ofertas**: cruza relatórios do Espião + DNA do negócio + criativos do cliente e gera
   **até 5 campanhas estruturadas por produto por semana**. Só gera um novo pacote depois de feedback
   do utilizador sobre o anterior. Copy de nível imbatível, localizada por país.
