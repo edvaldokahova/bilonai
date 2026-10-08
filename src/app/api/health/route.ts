@@ -45,7 +45,7 @@ export async function GET(req: Request) {
       env: {
         NEXT_PUBLIC_SUPABASE_URL: Boolean(url),
         SUPABASE_SERVICE_ROLE_KEY: keyKind,
-        OKANDA_WEBHOOK_SECRET: Boolean(process.env.OKANDA_WEBHOOK_SECRET),
+        LEMONSQUEEZY_WEBHOOK_SECRET: Boolean(process.env.LEMONSQUEEZY_WEBHOOK_SECRET),
       },
       db,
     },

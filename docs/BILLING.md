@@ -139,7 +139,7 @@ Língua: `profiles.locale` → cookie → `Accept-Language` (pt-* → pt-BR, res
 6. **Ecrã de faturação** (estado, faixas, "Gerir assinatura"). Teste: cancelar/retomar e mudar de plano no portal refletem no painel.
 7. **Travões** (tetos, teste, Apify) — no worker, com o Espião. **i18n** base em paralelo com 4–6.
 
-## 12. Em aberto (decisão do fundador)
-- Dados apagados **60 dias** depois do fim da assinatura? (proposta)
-- E-mail de aviso **2 dias antes do fim do teste**? (recomendado: reduz contestações de pagamento)
+## 12. Decisões do fundador (8 out 2026) e pendências
+- **Decidido:** dados apagados **60 dias** depois do fim da assinatura (a implementar na parte 7, com aviso por e-mail antes; apaga o utilizador no servidor).
+- **Decidido:** e-mail de aviso **2 dias antes do fim do teste** (parte 7, tarefa do worker).
 - A confirmar na construção (modo de teste): `skip_trial` no checkout e `billing_anchor = 0` para acabar um teste.
