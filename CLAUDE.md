@@ -1,7 +1,7 @@
 # BILONAI — Fonte da verdade do projeto
 
 > Lê este ficheiro inteiro antes de qualquer trabalho. Em caso de conflito com documentos antigos
-> (Bizao, bizaodigital.com, preços antigos, "O Cérebro" como upsell), **este ficheiro ganha**.
+> (Bizao, bizaodigital.com, preços antigos, Okanda Pay como cobrança, "O Cérebro" como upsell), **este ficheiro ganha**.
 > Arquitetura detalhada: `docs/ARCHITECTURE.md`. Esquema da BD: `supabase/migrations/`.
 
 ## 1. O produto
@@ -12,14 +12,18 @@
 - Frase que molda tudo: **"Humano define direção, agentes executam rotina."**
 - Posicionamento: software empresarial premium. Nunca linguagem de infoproduto ("bónus", "hack").
 
-## 2. Planos (preços de outubro de 2026 — os únicos válidos)
-| Plano | Kz | R$ | US$ | MT | Agentes | Afiliado |
-|---|---|---|---|---|---|---|
-| Alpha Node | 24.997 | 139 | 27 | 1.750 | Espião | 35% |
-| Apex Trader | 39.997 | 229 | 44 | 2.800 | Espião + Ofertas | 30% |
-| **Syndicate** (centro da oferta) | 59.997 | 339 | 65 | 4.200 | Espião, Ofertas, Gestor, O Cérebro, Suporte | 40% |
+## 2. Planos (preços de 8 de outubro de 2026 — os únicos válidos)
+| Plano | US$/mês | Agentes | Afiliado |
+|---|---|---|---|
+| Alpha Node | 19 | Espião | 35% |
+| Apex Trader | 36 | Espião + Ofertas | 30% |
+| **Syndicate** (centro da oferta) | 56 | Espião, Ofertas, Gestor, O Cérebro, Suporte | 40% |
 
-- Tudo é **assinatura mensal na Okanda Pay** (suporta os 3 países e cobrança recorrente de SaaS).
+- Tudo é **assinatura mensal em dólar no Lemon Squeezy** (Merchant of Record: trata dos impostos e mostra o
+  preço na moeda local do cliente). **Teste grátis de 7 dias, com limites** (desenho a fazer).
+- **Okanda Pay saiu da cobrança do Bilonai** (decisão do fundador, 8 out 2026): o webhook dela nunca entregou
+  e não avisa das renovações. Os preços antigos em Kz/R$/MT deixam de valer.
+- Comissões de afiliado (35/30/40%) a rever com a margem real: taxa do Lemon Squeezy 5% + 0,50 US$ por venda.
 - **Não existe** Quantum Vault nem O Cérebro como produto avulso. Não existe "bónus".
 - Limites por plano (decisão do CTO, confirmar com o fundador): Alpha 1 produto / 1 país;
   Apex 2 produtos / 2 países; Syndicate 5 produtos / 4 países.
@@ -49,13 +53,14 @@
   "DNA vencedor" condensado em texto).
 - **Login:** magic link (e-mail via Resend), palavra-passe opcional, 2FA TOTP (MFA nativo do Supabase).
   Nunca mostrar palavras-passe geradas numa página.
-- Webhook de pagamento: **`/api/webhooks/okanda`** (plural).
+- Webhook de pagamento: **`/api/webhooks/lemonsqueezy`** (plural), assinatura HMAC no cabeçalho `X-Signature`.
+  (A Okanda continua só como possível fonte de vendas dos clientes, ver acima, nunca como cobrança do Bilonai.)
 - Supabase **Free até 5 utilizadores**; o fundador muda para Pro quando o 6.º assinar (alerta no admin aos 4).
 - Ficheiros pesados (relatórios, criativos) vão para o **Google Drive do cliente** (scope `drive.file`).
   A BD só guarda texto, números e IDs.
 
 ## 5. Escopo
-**V1 (sprint de 5 dias):** webhook + callback Okanda, conta automática, magic link, planos e paywall
+**V1 (sprint de 5 dias):** webhook Lemon Squeezy + página de retorno, conta automática, magic link, planos e paywall
 visual, Setup Wizard (Drive, DNA, produtos, custos, importar estrutura — tudo com "Deixar para depois"),
 Espião, Ofertas (pacote semanal, "Publicado", feedback por print), Gestor e Cérebro em versão *lite*,
 pausar/renomear agentes, webhooks de vendas (Okanda/UTMfy), tickets de suporte, admin (utilizadores,
@@ -90,7 +95,8 @@ geração de imagens. Na UI aparecem como **"Em breve"**, nunca vendidos como pr
 - **Segredos nunca no código nem no git.** Só em variáveis de ambiente (Vercel + `.env.local`).
   As chaves que estiveram em texto nos documentos do projeto **devem ser rodadas** antes do lançamento.
 - Modelo: planeamento profundo → Opus; construção prática → Sonnet. Avisar o fundador quando mudar.
-- Língua da UI na V1: **pt-BR** e **en-US**. Moedas: Kz, MT, R$, US$.
+- Língua da UI na V1: **pt-BR** e **en-US** (textos organizados para o francês entrar depois sem refazer).
+  Moedas nas métricas dos clientes: Kz, MT, R$, US$. A cobrança do Bilonai é só em US$.
 - Pensar como CTO: discordar quando necessário, proteger custos, segurança e a promessa do produto.
 
 ## 10. Lembretes pendentes para o fundador
@@ -99,3 +105,8 @@ geração de imagens. Na UI aparecem como **"Em breve"**, nunca vendidos como pr
 - Corrigir o redirect URI do Google com typo (`bilionai.vercel.app`) e adicionar `https://agents.bilonai.com/api/auth/google/callback`.
 - Rodar todas as chaves de API expostas nos documentos.
 - Mudar o Supabase para Pro ao 6.º utilizador.
+- Lemon Squeezy: aguardar a aprovação da verificação da conta; moeda da loja já em USD; confirmar em
+  Settings → Payout como e para onde recebes (pagamentos 2x por mês, mínimo 50 US$, vendas retidas ~13 dias).
+- `/privacy` e `/terms` têm de descrever exatamente o que a ferramenta faz (revisão do Lemon Squeezy e da Meta).
+- Apagar no Supabase a função de teste `okanda-capture` (Edge Functions → okanda-capture → Delete).
+- Apagar da Okanda os webhooks de teste apontados ao Bilonai (Integrações → Webhook e Webhooks CRM).
