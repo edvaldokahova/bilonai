@@ -17,9 +17,10 @@ Referência de mercado (preço de tabela, ferramentas que só espiam anúncios):
 O Bilonai fica abaixo das de gama média e entrega agentes que executam, não só consulta.
 
 ## Custos usados (valores de 8 out 2026)
-- **Apify** (Facebook Ads Library): 5,00 US$ por 1.000 anúncios (plano Starter, 19 US$/mês com 19 US$ de crédito).
+- **Apify** (Facebook Ads Library): plano **Free** = 5 US$ de crédito/mês a 5,80 US$ por 1.000 anúncios (~860 anúncios/mês, para todos os clientes e testes juntos). Plano Starter = 19 US$/mês **que são crédito de uso** (3.800 anúncios a 5,00 US$ por 1.000), por isso só é custo fixo se o crédito sobrar.
 - **Gemini** (preços de 2027, mais altos que os de hoje): Flash 1,50 in / 7,50 out por 1M tokens; Pro 2,00 / 12,00.
-- **Fixos por fase:** ~22 US$/mês até ao 3.º cliente pagante (Apify Starter 19 + domínios ~3) · ~42 a partir do 3.º (+ Vercel Pro 20) · ~67 a partir do 6.º (+ Supabase Pro 25). Resend é grátis até 100 e-mails/dia (depois 20).
+- **Fixos por fase:** ~3 US$/mês (domínios) com Apify Free · + Vercel Pro 20 a partir do 3.º cliente pagante · + Supabase Pro 25 a partir do 6.º · Apify passa a Starter quando o gasto do mês chegar a ~4 US$ (o gatilho é o crédito, não o n.º de clientes). Resend é grátis até 100 e-mails/dia (depois 20).
+- **O crédito grátis da Apify chega para pouco:** ~860 anúncios/mês. Um Alpha típico gasta ~400 (2,3 US$), por isso o crédito cobre uns 2 clientes Alpha, ou cerca de meio Apex. Cada teste grátis gasta ~0,70 US$.
 - **Vercel Pro no 3.º cliente pagante** (decisão do fundador, fase de validação). Risco conhecido: o plano grátis (Hobby) só permite uso **não comercial** pelos termos da Vercel, por isso a Vercel pode pausar o projeto. Pro mensal, sem fidelização (pode voltar ao grátis).
 - Taxas: 5% + 0,50 + 3% de reserva (levantamento/câmbio, reembolsos).
 
@@ -39,6 +40,7 @@ Só o Espião, 3 relatórios, sem Ofertas. Custo ≈ 1 US$ por teste. Um teste p
 ## Para o desenho (Opus)
 1. Leitura incremental: só os anúncios novos desde a última corrida (o Apify cobra por anúncio).
 2. Analisar com IA só os melhores anúncios de cada relatório.
-3. Contadores de consumo por cliente e aviso ao atingir 80% do teto.
+3. Contadores de consumo por cliente e aviso ao atingir 80% do teto. Travão de orçamento da Apify: se o crédito do mês acabar, o Espião adia a corrida e avisa o admin (nunca falha em silêncio). Aviso no admin aos 4 US$ gastos.
+3b. Enquanto a Apify estiver no plano grátis, limitar os testes grátis a ~5 por mês.
 4. Termos de uso com os tetos escritos (uso justo).
 5. Rever tudo ao fim de 30 dias com o custo real do painel de consumos.
