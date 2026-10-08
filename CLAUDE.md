@@ -13,17 +13,17 @@
 - Posicionamento: software empresarial premium. Nunca linguagem de infoproduto ("bónus", "hack").
 
 ## 2. Planos (preços de 8 de outubro de 2026 — os únicos válidos)
-| Plano | US$/mês | Agentes | Afiliado |
-|---|---|---|---|
-| Alpha Node | 19 | Espião | 35% |
-| Apex Trader | 36 | Espião + Ofertas | 30% |
-| **Syndicate** (centro da oferta) | 56 | Espião, Ofertas, Gestor, O Cérebro, Suporte | 40% |
+| Plano | US$/mês | Agentes |
+|---|---|---|
+| Alpha Node | 19 | Espião |
+| Apex Trader | 39 | Espião + Ofertas |
+| **Syndicate** (centro da oferta) | 69 | Espião, Ofertas, Gestor, O Cérebro, Suporte |
 
 - Tudo é **assinatura mensal em dólar no Lemon Squeezy** (Merchant of Record: trata dos impostos e mostra o
   preço na moeda local do cliente). **Teste grátis de 7 dias, com limites** (desenho a fazer).
 - **Okanda Pay saiu da cobrança do Bilonai** (decisão do fundador, 8 out 2026): o webhook dela nunca entregou
   e não avisa das renovações. Os preços antigos em Kz/R$/MT deixam de valer.
-- Comissões de afiliado (35/30/40%) a rever com a margem real: taxa do Lemon Squeezy 5% + 0,50 US$ por venda.
+- **Sem afiliados na 1.ª fase.** Custos, margens e tetos de uso por plano: `docs/PRICING.md` (os tetos são obrigatórios).
 - **Não existe** Quantum Vault nem O Cérebro como produto avulso. Não existe "bónus".
 - Limites por plano (decisão do CTO, confirmar com o fundador): Alpha 1 produto / 1 país;
   Apex 2 produtos / 2 países; Syndicate 5 produtos / 4 países.
