@@ -5,9 +5,9 @@ Escrito em 5 out 2026. Regras e decisões de negócio: `CLAUDE.md`.
 ## 1. Visão geral
 
 ```
- Okanda Pay ──webhook──▶ /api/webhooks/okanda ──▶ cria utilizador + subscrição
-      │                                             │
-      └──redirect──▶ /api/checkout/callback ──▶ magic link ──▶ Setup Wizard
+ Lemon Squeezy ──webhook──▶ /api/webhooks/lemonsqueezy ──▶ cria utilizador + subscrição
+      │                                                    │
+      └──redirect──▶ /welcome?ref=… ──▶ e-mail com magic link ──▶ Setup Wizard
                                                      │
  Utilizador ─▶ agents.bilonai.com (Next.js na Vercel) ─▶ Supabase (Postgres + Auth)
                      │            ▲                          │
@@ -29,6 +29,9 @@ Uma única app Next.js serve os três domínios; o `middleware.ts` decide pelo h
 - **Versão do Next:** ver a decisão pendente na secção 12.
 
 ## 3. Pagamento → conta (zero fricção)
+> **Substituído (8 out 2026): a cobrança é no Lemon Squeezy. O desenho válido está em `docs/BILLING.md`.**
+> O texto abaixo (Okanda) fica só como histórico.
+
 1. **Webhook** `/api/webhooks/okanda`
    - Valida a assinatura (o método exato depende da documentação da Okanda — pendente).
    - Idempotência: guarda `event_id` em `payment_events`; se já existe, responde 200 e não faz nada.

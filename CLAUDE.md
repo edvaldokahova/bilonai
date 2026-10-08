@@ -2,7 +2,8 @@
 
 > Lê este ficheiro inteiro antes de qualquer trabalho. Em caso de conflito com documentos antigos
 > (Bizao, bizaodigital.com, preços antigos, Okanda Pay como cobrança, "O Cérebro" como upsell), **este ficheiro ganha**.
-> Arquitetura detalhada: `docs/ARCHITECTURE.md`. Esquema da BD: `supabase/migrations/`.
+> Arquitetura detalhada: `docs/ARCHITECTURE.md`. Faturação: `docs/BILLING.md`. Preços e custos: `docs/PRICING.md`.
+> Esquema da BD: `supabase/migrations/`.
 
 ## 1. O produto
 - **Bilonai** (Bil = bilhões, On = conectado, AI). Antes chamava-se Bizao Digital.
